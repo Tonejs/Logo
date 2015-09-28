@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Logo</title>
+	<script type="text/javascript" src="../../Tone.js/build/Tone.js"></script>
+	<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../build/Logo.js"></script>
+	<script type="text/javascript" src="./audiokeys.js"></script>
+
+	<link rel="stylesheet" href="fontello/css/fontello.css">
+
+</head>
+<body>
+	<style type="text/css">
+		body {
+			background-color: black;
+		}
+
+		#Logo {
+			margin-top: 100px;
+			width: 100%;
+			height: 200px;
+		}
+
+		#KeyboardInstructions {
+			position: absolute;
+			color: white;
+			font-size: 20px;
+			font-family: monospace;
+			width: 100%;
+			height: 30px;
+			left: 0px;
+			bottom: 0px;
+			text-align: center;
+		}
+	</style>
+	<div id="Logo"></div>
+	 <div id="KeyboardInstructions"> use the <i class="icon-keyboard"></i> to make some sounds </div>
+	<script type="text/javascript">
+		var synth = new Tone.PolySynth(4, Tone.DuoSynth).toMaster();
+
+		// create a keyboard
+		var keyboard = new AudioKeys({
+			polyphony: 4,
+			rows: 2,
+			priority: "lowest"
+		});
+
+		keyboard.down( function(note) {
+			// do things with the note object
+			synth.triggerAttack(note.frequency);
+		});
+
+		keyboard.up( function(note) {
+			synth.triggerRelease(note.frequency);
+		});
+
+		var logo = new Tone.Logo({
+			"width" : $("body").width(),
+			"height" : 150,
+			"container" : "#Logo"
+		});
+
+	</script>
+
+</body>
+</html>

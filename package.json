@@ -1,0 +1,22 @@
+{
+  "name": "TonejsLogo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/Logo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "author": "Yotam Mann",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer-loader": "*",
+    "css-loader": "*",
+    "file-loader": "*",
+    "jquery": "^2.1.4",
+    "node-sass": "*",
+    "sass-loader": "*",
+    "style-loader": "*",
+    "url-loader": "*",
+    "webpack": "*"
+  }
+}

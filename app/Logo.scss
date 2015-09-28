@@ -1,0 +1,47 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
+
+#TonejsLogo {
+
+	position: absolute;
+	background-color: black;
+	cursor: pointer;
+
+	#Canvas, #Title, #Border {
+		position: absolute;
+	}
+
+	#TextContainer {
+
+		position: absolute;
+		width: auto;
+		transform: translate(-50%, 0px);
+		left: 50%;
+		height: 100%;
+
+		#Title {
+			position: relative;
+			display: inline-block;
+			font-family: "Roboto Mono" monospace;
+			color: white;
+			text-align: center;
+			height: 100%;
+			top: 0px;
+			// display: none;
+			width: 100%;
+		}
+
+		#Canvas {
+			position: absolute;
+			height: 100%;
+			top: 0px;
+			border-radius: 2px;
+			z-index: 0;
+			right: 0px;
+			width: 10px;
+			// background-color: #22DBC0;
+			background-color: #ED33CF;
+
+		}
+	}
+
+}
