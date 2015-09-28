@@ -3,7 +3,7 @@ var webpack = require("webpack");
 module.exports = {
 	"context": __dirname,
 	entry: {
-		"Logo": "app/Logo",
+		"Logo": "Logo/Logo",
 	},
 	output: {
 		filename: "./build/[name].js",
@@ -18,7 +18,7 @@ module.exports = {
 	},
 	resolve: {
 		root: __dirname,
-		modulesDirectories : ["bower_components", "style", "app", "../Tone.js/build"],
+		modulesDirectories : ["bower_components", "style", "Logo", "../Tone.js/build"],
 	},
 	plugins: [
 		new webpack.ResolverPlugin([
