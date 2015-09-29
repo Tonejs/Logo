@@ -1,16 +1,16 @@
 
 node_modules/
 
-test/fontello/demo.html
+deps/fontello/demo.html
 
-test/fontello/css/animation.css
+deps/fontello/css/animation.css
 
-test/fontello/css/fontello-codes.css
+deps/fontello/css/fontello-codes.css
 
-test/fontello/css/fontello-embedded.css
+deps/fontello/css/fontello-embedded.css
 
-test/fontello/css/fontello-ie7-codes.css
+deps/fontello/css/fontello-ie7-codes.css
 
-test/fontello/css/fontello-ie7.css
+deps/fontello/css/fontello-ie7.css
 
-test/fontello/README.txt
+deps/fontello/README.txt
