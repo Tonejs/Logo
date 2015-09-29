@@ -1,7 +1,5 @@
 define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle, Waveforms){
 
-	var colors = ["#3833ED","#1EDF3E","#ED3333","#7F33ED","#22DBC0","#ED33CF","#FFFC0C","#f5871f"];
-
 	var bufferLen = 256;
 
 	var waveform = Waveforms(bufferLen).random;
@@ -157,7 +155,6 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 		} else {
 			margin = height * 0.2;
 		}
-		var sideMargin = this.lineWidth;
 		context.clearRect(0, 0, width, height);
 		context.beginPath();
 
