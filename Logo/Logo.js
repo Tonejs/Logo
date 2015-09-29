@@ -52,7 +52,7 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 		this.title = $("<div>", {
 			"id" : "Title",
 			// "text" : "Tone.js"
-		}).appendTo(this.textContainer).html("Tone<span>.</span>js");
+		}).appendTo(this.textContainer).html("<span class='Closer'>T</span>one<span class='Closer'>.</span><span id='JS'>js</span>");
 
 		/**
 		 *  The waveform analysis of the incoming signal

@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Mono:400,500);
 
 #TonejsLogo {
 
@@ -26,11 +26,17 @@
 			text-align: center;
 			height: 100%;
 			top: 0px;
-			// display: none;
 			width: 100%;
+			font-weight: 400;
 
-			span {
+			.Closer {
 				margin: -3%;
+			}
+
+			#JS {
+				// font-size: 0.8em;
+				// color: black;
+				// font-weight: 500;
 			}
 		}
 
