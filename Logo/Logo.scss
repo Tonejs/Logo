@@ -26,8 +26,18 @@
 			text-align: center;
 			height: 100%;
 			top: 0px;
-			// display: none;
 			width: 100%;
+			font-weight: 400;
+
+			.Closer {
+				margin: -3%;
+			}
+
+			#JS {
+				// font-size: 0.8em;
+				// color: black;
+				// font-weight: 500;
+			}
 		}
 
 		#Canvas {
@@ -38,8 +48,8 @@
 			z-index: 0;
 			right: 0px;
 			width: 10px;
-			// background-color: #22DBC0;
-			background-color: #ED33CF;
+			background-color: #F734D7;
+			// background-color: #ED33CF;
 
 		}
 	}
