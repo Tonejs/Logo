@@ -1,16 +1,23 @@
-define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle, Waveforms){
+define(["jquery", "Logo.scss", "Waveforms"], function($, LogoStyle, Waveforms){
 
 	var bufferLen = 256;
 
 	var waveform = Waveforms(bufferLen).random;
 
+	var hasTone = typeof window.Tone === "function";
+
 	/**
-	 *  @class  Tone.Logo visualizes current Tone.js context
+	 *  @class  Logo visualizes current Tone.js context
 	 *  @param  {Object}  options  The options
 	 */
-	Tone.Logo = function(options){
+	var Logo = function(options){
 
-		options = this.defaultArg(options, Tone.Logo.defaults);
+		//get the defaults
+		for (var attr in Logo.defaults){
+			if (typeof options[attr] === "undefined"){
+				options[attr] = Logo.defaults[attr];
+			}
+		}
 
 		/**
 		 *  The container element
@@ -18,7 +25,11 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 		 */
 		this.element = $("<div>", {
 			"id" : "TonejsLogo"
-		}).appendTo(options.container);
+		}).appendTo(options.container)
+			.on("click", function(e){
+				e.preventDefault();
+				window.location.href = "http://tonejs.org";
+			});
 
 
 		/**
@@ -52,22 +63,28 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 			// "text" : "Tone.js"
 		}).appendTo(this.textContainer).html("<span class='Closer'>T</span>one<span class='Closer'>.</span><span id='JS'>js</span>");
 
-		/**
-		 *  The waveform analysis of the incoming signal
-		 *  @type  {Tone.Analyser}
-		 */
-		this.analyser = new Tone.Analyser({
-			"size" : bufferLen,
-			"type" : "waveform",
-			"returnType" : "byte"
-		});
+		if (hasTone){
+			/**
+			 *  The waveform analysis of the incoming signal
+			 *  @type  {Tone.Analyser}
+			 */
+			this.analyser = new Tone.Analyser({
+				"size" : bufferLen,
+				"type" : "waveform",
+				"returnType" : "byte"
+			});
 
-		/**
-		 *  A signal to make the analyser rest
-		 *  at 0 when nothing is connected
-		 *  @private
-		 */
-		this._signal = new Tone.Signal(0).connect(this.analyser);
+			/**
+			 *  A signal to make the analyser rest
+			 *  at 0 when nothing is connected
+			 *  @private
+			 */
+			this._signal = new Tone.Signal(0).connect(this.analyser);
+
+			//connect the master output to the analyser
+			Tone.Master.connect(this.analyser);
+
+		}
 
 		/**
 		 *  the value below which it is considered silent
@@ -81,20 +98,21 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 
 		//set the size
 		this.resize(options.width, options.height);
-		//connect the master output to the analyser
-		Tone.Master.connect(this.analyser);
 
-		//start the draw loop
-		this._draw();
+		if (hasTone){
+			//start the draw loop
+			this._draw();
+		} else {
+			this._drawBuffer(waveform, true);
+		}
+
 	};
-
-	Tone.extend(Tone.Logo);
 
 	/**
 	 *  The defaults
 	 *  @type  {Object}
 	 */
-	Tone.Logo.defaults = {
+	Logo.defaults = {
 		"container" : "body",
 		"width" : 300,
 		"height" : 80,
@@ -104,9 +122,9 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 	 *  Set the size of the logo
 	 *  @param  {Number}  width
 	 *  @param  {Number}  height
-	 *  @return  {Tone.Logo}  this
+	 *  @return  {Logo}  this
 	 */
-	Tone.Logo.prototype.resize = function(width, height) {
+	Logo.prototype.resize = function(width, height) {
 		//set the size of the logo
 		this.element.width(width);
 		this.element.height(height);
@@ -132,7 +150,7 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 	/**
 	 *  The draw loop which paints the waveform
 	 */
-	Tone.Logo.prototype._draw = function() {
+	Logo.prototype._draw = function() {
 		requestAnimationFrame(this._draw.bind(this));
 		var analysis = this.analyser.analyse();
 		//if it's silent, draw a canned waveform when the mouse is over
@@ -146,7 +164,7 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 	/**
 	 *  Draw the given buffer onto the canvas
 	 */
-	Tone.Logo.prototype._drawBuffer = function(buffer, silent){
+	Logo.prototype._drawBuffer = function(buffer, silent){
 		var context = this.context;
 		var width = this.context.canvas.width;
 		var height = this.context.canvas.height;
@@ -184,7 +202,7 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 	 *  True if the analyser analysis array is silent (all 0s)
 	 *  @private
 	 */
-	Tone.Logo.prototype._isSilent = function(analysis){
+	Logo.prototype._isSilent = function(analysis){
 		//if the average is close to 128
 		var total = 0;
 		for (var i = 0; i < analysis.length; i++){
@@ -199,16 +217,16 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 	 *  Scale a value from between the inputMin/Max to the outputMin/Max
 	 *  @private
 	 */
-	Tone.Logo.prototype._scale = function(value, inputMin, inputMax, outputMin, outputMax){
+	Logo.prototype._scale = function(value, inputMin, inputMax, outputMin, outputMax){
 		var norm = (value - inputMin) / (inputMax - inputMin);
 		return norm * (outputMax - outputMin) + outputMin;
 	};
 
 	/**
 	 *  Clean up
-	 *  @returns {Tone.Logo} this
+	 *  @returns {Logo} this
 	 */
-	Tone.Logo.prototype.dispose = function(){
+	Logo.prototype.dispose = function(){
 		this.element.remove();
 		this.element = null;
 		this.canvas.remove();
@@ -222,5 +240,9 @@ define(["Tone", "jquery", "Logo.scss", "Waveforms"], function(Tone, $, LogoStyle
 		this._signal = null;
 	};
 
-	return Tone.Logo;
+	if (hasTone){
+		Tone.Logo = Logo;
+	}
+
+	return Logo;
 });
