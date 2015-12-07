@@ -25,7 +25,11 @@ define(["jquery", "Logo.scss", "Waveforms"], function($, LogoStyle, Waveforms){
 		 */
 		this.element = $("<div>", {
 			"id" : "TonejsLogo"
-		}).appendTo(options.container);
+		}).appendTo(options.container)
+			.on("click", function(e){
+				e.preventDefault();
+				window.location.href = "http://tonejs.org";
+			});
 
 
 		/**
