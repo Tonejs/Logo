@@ -11,7 +11,6 @@ module.exports = {
 		libraryTarget : "umd"
 	},
 	externals: { 
-		jquery: "jQuery",
 		Tone : "Tone",
 	},
 	resolve: {
