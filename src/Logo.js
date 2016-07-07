@@ -1,12 +1,4 @@
-define(["Logo.scss", "Waveforms"], function(LogoStyle, Waveforms){
-
-	var bufferLen = 256;
-
-	var waveform = Waveforms(bufferLen).random;
-
-	function hasTone(){
-		return typeof window.Tone === "function";
-	}
+define(["Logo.scss", "Analyser"], function(LogoStyle, Analyser){
 
 	/**
 	 *  @class  Logo visualizes current Tone.js context
@@ -44,18 +36,18 @@ define(["Logo.scss", "Waveforms"], function(LogoStyle, Waveforms){
 		this.element.appendChild(this.textContainer);
 
 		/**
-		 *  the waveform canvas
+		 *  the element which holds the waveform
 		 *  @type  {Element}
 		 */
-		this.canvas = document.createElement("Canvas");
-		this.canvas.id = "Canvas";
-		this.textContainer.appendChild(this.canvas);
+		this.canvasContainer = document.createElement("div");
+		this.canvasContainer.id = "Canvas";
+		this.textContainer.appendChild(this.canvasContainer);
 
 		/**
-		 *  the drawing context
-		 *  @type  {Canavs}
+		 *  the waveform
+		 *  @type  {Analyser}
 		 */
-		this.context = this.canvas.getContext("2d");
+		this.analyser = new Analyser(this.canvasContainer);
 
 		/**
 		 *  the Tone.js title
@@ -71,52 +63,11 @@ define(["Logo.scss", "Waveforms"], function(LogoStyle, Waveforms){
 		 *  @type {Element}
 		 */
 		this.link = document.createElement("a");
-		this.link.href = "http://tonejs.org";
+		this.link.href = "https://tonejs.github.io";
 		this.element.appendChild(this.link);
 
-		if (hasTone()){
-			/**
-			 *  The waveform analysis of the incoming signal
-			 *  @type  {Tone.Analyser}
-			 */
-			this.analyser = new Tone.Analyser({
-				"size" : bufferLen,
-				"type" : "waveform",
-				"returnType" : "byte"
-			});
 
-			/**
-			 *  A signal to make the analyser rest
-			 *  at 0 when nothing is connected
-			 *  @private
-			 */
-			this._signal = new Tone.Signal(0).connect(this.analyser);
-
-			//connect the master output to the analyser
-			Tone.Master.connect(this.analyser);
-
-		}
-
-		/**
-		 *  the value below which it is considered silent
-		 */
-		this._silentThresh = 0.01;
-
-		/**
-		 *  The current RMS of the incoming signal
-		 */
-		this._rms = 0;
-
-		//set the size
 		this.resize(options.width, options.height);
-
-		if (hasTone()){
-			//start the draw loop
-			this._draw();
-		} else {
-			this._drawBuffer(waveform, true);
-		}
-
 	};
 
 	/**
@@ -139,18 +90,16 @@ define(["Logo.scss", "Waveforms"], function(LogoStyle, Waveforms){
 		//set the size of the logo
 		this.element.style.width = width + "px";
 		this.element.style.height = height + "px";
-		// this.canvas.width(height);
-		//double pixel density
-		this.context.canvas.width = this.canvas.offsetHeight * 2;
-		this.context.canvas.height = this.canvas.offsetHeight * 2;
+		
 		//set the font size
-
 		this.title.style.lineHeight = (height * 0.85).toString() + "px";
 		this.title.style.fontSize =  (height * 0.88).toString() + "px";
 
-		this.canvas.style.borderRadius = height/50 + "px";
-		this.canvas.style.width = this.canvas.offsetHeight;
-		this.canvas.style.height = this.canvas.offsetHeight;
+		this.canvasContainer.style.borderRadius = height/50 + "px";
+		this.canvasContainer.style.width = this.canvasContainer.offsetHeight + "px";
+		this.canvasContainer.style.height = this.canvasContainer.offsetHeight + "px";
+
+		this.analyser.resize();
 
 		return this;
 	};
@@ -247,10 +196,6 @@ define(["Logo.scss", "Waveforms"], function(LogoStyle, Waveforms){
 		this._signal.dispose();
 		this._signal = null;
 	};
-
-	if (hasTone()){
-		Tone.Logo = Logo;
-	}
 
 	return Logo;
 });
