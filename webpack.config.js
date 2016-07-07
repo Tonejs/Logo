@@ -3,11 +3,12 @@ var webpack = require("webpack");
 module.exports = {
 	"context": __dirname,
 	entry: {
-		"Logo": "Logo/Logo",
+		"Logo": "src/Logo",
+		"Waveform": "src/Waveform",
 	},
 	output: {
 		filename: "./build/[name].js",
-		library : "Logo",
+		library : "[name]",
 		libraryTarget : "umd"
 	},
 	externals: { 
@@ -15,7 +16,7 @@ module.exports = {
 	},
 	resolve: {
 		root: __dirname,
-		modulesDirectories : ["style", "Logo", "../Tone.js/build"],
+		modulesDirectories : ["src"],
 	},
 	plugins: [new webpack.optimize.UglifyJsPlugin({minimize: true})],
 	module: {
