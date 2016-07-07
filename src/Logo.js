@@ -6,68 +6,74 @@ define(["Logo.scss", "Analyser"], function(LogoStyle, Analyser){
 	 */
 	var Logo = function(options){
 
-		//get the defaults
-		for (var attr in Logo.defaults){
-			if (typeof options[attr] === "undefined"){
-				options[attr] = Logo.defaults[attr];
+		if (this instanceof Logo) {
+
+			//get the defaults
+			for (var attr in Logo.defaults){
+				if (typeof options[attr] === "undefined"){
+					options[attr] = Logo.defaults[attr];
+				}
 			}
+
+			/**
+			 *  The container element
+			 *  @type  {Element}
+			 */
+			this.element = document.createElement("div");
+			this.element.id = "TonejsLogo";
+
+			if (typeof options.container === "string"){
+				document.querySelector(options.container).appendChild(this.element);
+			} else if (options.container instanceof Element){
+				options.container.appendChild(this.element);
+			}
+
+
+			/**
+			 *  the Tone.js title
+			 *  @type  {Element}
+			 */
+			this.textContainer = document.createElement("div");
+			this.textContainer.id = "TextContainer";
+			this.element.appendChild(this.textContainer);
+
+			/**
+			 *  the element which holds the waveform
+			 *  @type  {Element}
+			 */
+			this.canvasContainer = document.createElement("div");
+			this.canvasContainer.id = "Canvas";
+			this.textContainer.appendChild(this.canvasContainer);
+
+			/**
+			 *  the waveform
+			 *  @type  {Analyser}
+			 */
+			this.analyser = new Analyser(this.canvasContainer);
+
+			/**
+			 *  the Tone.js title
+			 *  @type  {Element}
+			 */
+			this.title = document.createElement("div");
+			this.title.id = "Title";
+			this.textContainer.appendChild(this.title);
+			this.title.innerHTML = "<span class='Closer'>T</span>one<span class='Closer'>.</span><span id='JS'>js</span>";
+
+			/**
+			 *  The link
+			 *  @type {Element}
+			 */
+			this.link = document.createElement("a");
+			this.link.href = "https://tonejs.github.io";
+			this.element.appendChild(this.link);
+
+
+			this.resize(options.width, options.height);
+
+		} else {
+			return new Logo(options);
 		}
-
-		/**
-		 *  The container element
-		 *  @type  {Element}
-		 */
-		this.element = document.createElement("div");
-		this.element.id = "TonejsLogo";
-
-		if (typeof options.container === "string"){
-			document.querySelector(options.container).appendChild(this.element);
-		} else if (options.container instanceof Element){
-			options.container.appendChild(this.element);
-		}
-
-
-		/**
-		 *  the Tone.js title
-		 *  @type  {Element}
-		 */
-		this.textContainer = document.createElement("div");
-		this.textContainer.id = "TextContainer";
-		this.element.appendChild(this.textContainer);
-
-		/**
-		 *  the element which holds the waveform
-		 *  @type  {Element}
-		 */
-		this.canvasContainer = document.createElement("div");
-		this.canvasContainer.id = "Canvas";
-		this.textContainer.appendChild(this.canvasContainer);
-
-		/**
-		 *  the waveform
-		 *  @type  {Analyser}
-		 */
-		this.analyser = new Analyser(this.canvasContainer);
-
-		/**
-		 *  the Tone.js title
-		 *  @type  {Element}
-		 */
-		this.title = document.createElement("div");
-		this.title.id = "Title";
-		this.textContainer.appendChild(this.title);
-		this.title.innerHTML = "<span class='Closer'>T</span>one<span class='Closer'>.</span><span id='JS'>js</span>";
-
-		/**
-		 *  The link
-		 *  @type {Element}
-		 */
-		this.link = document.createElement("a");
-		this.link.href = "https://tonejs.github.io";
-		this.element.appendChild(this.link);
-
-
-		this.resize(options.width, options.height);
 	};
 
 	/**
