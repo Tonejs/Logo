@@ -38,9 +38,6 @@ define(["Waveforms"], function (Waveforms) {
 		 */
 		this._context = this._element.getContext("2d");
 
-		//resize initially
-		this.resize();
-
 		//the analyser element
 		if (hasTone()){
 			/**
@@ -67,14 +64,20 @@ define(["Waveforms"], function (Waveforms) {
 		if (hasTone()){
 			this._boundLoop = this._loop.bind(this);
 			this._loop();
-		} else {
-			this._drawBuffer(waveform, true);
 		}
+
+		//resize initially
+		this.resize();
 	};
 
-	Analyser.prototype.resize = function(){
-		this._context.canvas.width = this._container.offsetWidth * 2;
-		this._context.canvas.height = this._container.offsetHeight * 2;
+	Analyser.prototype.resize = function(width, height){
+		width = width || this._container.offsetWidth;
+		height = height || this._container.offsetHeight;
+		this._context.canvas.width = width * 2;
+		this._context.canvas.height = height * 2;
+		if (!hasTone()){
+			this._drawBuffer(waveform, true);
+		}
 	};
 
 	Analyser.prototype._loop = function(){

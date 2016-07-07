@@ -99,7 +99,7 @@ define(["Logo.scss", "Analyser"], function(LogoStyle, Analyser){
 		this.canvasContainer.style.width = this.canvasContainer.offsetHeight + "px";
 		this.canvasContainer.style.height = this.canvasContainer.offsetHeight + "px";
 
-		this.analyser.resize();
+		this.analyser.resize(this.canvasContainer.offsetHeight, this.canvasContainer.offsetHeight);
 
 		return this;
 	};
