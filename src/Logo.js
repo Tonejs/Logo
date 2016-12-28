@@ -1,4 +1,4 @@
-define(["Logo.scss", "Analyser"], function(LogoStyle, Analyser){
+define(["Logo.scss", "Analyser", "T.svg"], function(LogoStyle, Analyser, svgT){
 
 	/**
 	 *  @class  Logo visualizes current Tone.js context
@@ -33,9 +33,10 @@ define(["Logo.scss", "Analyser"], function(LogoStyle, Analyser){
 			 *  the Tone.js title
 			 *  @type  {Element}
 			 */
-			this.textContainer = document.createElement("div");
-			this.textContainer.id = "TextContainer";
-			this.element.appendChild(this.textContainer);
+			this.logoContainer = document.createElement("div");
+			this.logoContainer.id = "LogoContainer";
+			this.logoContainer.innerHTML = "<span id='T'></span><span id='one'></span><span id='js'></span>";
+			this.element.appendChild(this.logoContainer);
 
 			/**
 			 *  the element which holds the waveform
@@ -43,7 +44,7 @@ define(["Logo.scss", "Analyser"], function(LogoStyle, Analyser){
 			 */
 			this.canvasContainer = document.createElement("div");
 			this.canvasContainer.id = "Canvas";
-			this.textContainer.appendChild(this.canvasContainer);
+			this.logoContainer.appendChild(this.canvasContainer);
 
 			/**
 			 *  the waveform
@@ -52,21 +53,12 @@ define(["Logo.scss", "Analyser"], function(LogoStyle, Analyser){
 			this.analyser = new Analyser(this.canvasContainer);
 
 			/**
-			 *  the Tone.js title
-			 *  @type  {Element}
-			 */
-			this.title = document.createElement("div");
-			this.title.id = "Title";
-			this.textContainer.appendChild(this.title);
-			this.title.innerHTML = "<span class='Closer'>T</span>one<span class='Closer'>.</span><span id='JS'>js</span>";
-
-			/**
 			 *  The link
 			 *  @type {Element}
 			 */
 			this.link = document.createElement("a");
 			this.link.href = "https://tonejs.github.io";
-			this.element.appendChild(this.link);
+			this.logoContainer.appendChild(this.link);
 
 
 			this.resize(options.width, options.height);
@@ -96,10 +88,12 @@ define(["Logo.scss", "Analyser"], function(LogoStyle, Analyser){
 		//set the size of the logo
 		this.element.style.width = width + "px";
 		this.element.style.height = height + "px";
-		
-		//set the font size
-		this.title.style.lineHeight = (height * 0.85).toString() + "px";
-		this.title.style.fontSize =  (height * 0.88).toString() + "px";
+
+		// make sure the logo container maintains the right aspect ratio
+		width = height / 0.3;
+
+		this.logoContainer.style.width = width + "px";
+		this.logoContainer.style.height = height + "px";
 
 		this.canvasContainer.style.borderRadius = height/50 + "px";
 		this.canvasContainer.style.width = this.canvasContainer.offsetHeight + "px";

@@ -1,50 +1,45 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
-
 #TonejsLogo {
 
-	position: absolute;
-	background-color: black;
-	cursor: pointer;
-
-	#Canvas, #Title, #Border, a {
-		position: absolute;
-	}
-
-	a {
-		width: 100%;
-		height: 100%;
-		top: 0px;
-		left: 0px;
-	}
-
-	#TextContainer {
+	#LogoContainer {
 
 		position: absolute;
-		width: auto;
-		transform: translate(-50%, 0px);
 		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
 		height: 100%;
+		width: 100%;
+		overflow: hidden;
+		background-color: black;
 
-		#Title {
+		span {
+			height: 100%;
+			width: 100%;
 			position: relative;
 			display: inline-block;
-			font-family: "Roboto Mono", monospace;
-			color: white;
-			text-align: center;
-			height: 100%;
-			top: 0px;
-			width: 100%;
-			font-weight: 400;
+			position: absolute;
+		}
 
-			.Closer {
-				margin: -3%;
-			}
+		$imgHeight : 110%;
 
-			#JS {
-				// font-size: 0.8em;
-				// color: black;
-				// font-weight: 500;
-			}
+		#T {
+			background: url(T.svg);
+			background-repeat: no-repeat;
+			background-size: auto $imgHeight;
+			left: 0px;
+		}
+
+		#one {
+			background: url(one.svg);
+			background-repeat: no-repeat;
+			background-size: auto $imgHeight;
+			left: 13%;
+		}
+
+		#js {
+			background: url(js.svg);
+			background-repeat: no-repeat;
+			background-size: auto $imgHeight;
+			left: 54%;
 		}
 
 		#Canvas {
@@ -52,11 +47,19 @@
 			height: 100%;
 			top: 0px;
 			border-radius: 2%;
-			z-index: 0;
 			right: 0px;
 			background-color: #F734D7;
-			// background-color: #ED33CF;
+			z-index: -1;
+		}
 
+		a {
+			position: absolute;
+			z-index: 2;
+			cursor: pointer;
+			width: 100%;
+			height: 100%;
+			top: 0px;
+			left: 0px;
 		}
 	}
 
