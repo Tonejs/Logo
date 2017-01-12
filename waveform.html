@@ -2,12 +2,29 @@
 <html>
 <head>
 	<title>Waveform</title>
-	<script src="https://tonejs.github.io/CDN/latest/Tone.min.js"></script>
+	<script src="https://tonejs.github.io/build/Tone.min.js"></script>
 	<script src="./build/Waveform.js"></script>
+	<script type="text/javascript" src="./deps/audiokeys.js"></script>
 </head>
 <body>
 <script type="text/javascript">
-	
+	var synth = new Tone.PolySynth(4, Tone.DuoSynth).toMaster();
+
+		// create a keyboard
+		var keyboard = new AudioKeys({
+			polyphony: 4,
+			rows: 2,
+			priority: "lowest"
+		});
+
+		keyboard.down( function(note) {
+			// do things with the note object
+			synth.triggerAttack(note.frequency);
+		});
+
+		keyboard.up( function(note) {
+			synth.triggerRelease(note.frequency);
+		});
 </script>
 </body>
 </html>
