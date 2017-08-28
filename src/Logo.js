@@ -163,7 +163,7 @@ define(["Logo.scss", "Analyser", "T.svg"], function(LogoStyle, Analyser, svgT){
 		//if the average is close to 128
 		var total = 0;
 		for (var i = 0; i < analysis.length; i++){
-			total += Math.pow((analysis[i] - 128) / 128, 2);
+			total += Math.pow(analysis[i], 2);
 		}
 		var rms = Math.sqrt(total / analysis.length);
 		this._rms = Math.max(rms, this._rms * 0.9);
