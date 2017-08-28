@@ -12,33 +12,33 @@ define(function () {
 
 		var i;
 		for (i = 0; i < bufferLength; i++){
-			sine[i] = (Math.sin(Math.PI * 2 * i / 255) + 1) * 128;
+			sine[i] = Math.sin(Math.PI * 2 * i / bufferLength);
 		}
 
 		for (i = 0; i < bufferLength; i++){
-			sawtooth[i] = ((i + bufferLength/2) % bufferLength) / bufferLength * 255;
+			sawtooth[i] = (((i + bufferLength/2) % bufferLength) / bufferLength) * 2 - 1;
 		}
 
 		for (i = 0; i < bufferLength; i++){
-			if (i < bufferLength/4){
-				triangle[i] = i/(bufferLength/4) * 127 + 128;
-			} else if (i < bufferLength * 0.75){
-				triangle[i] = (1 - (i - bufferLength/4)/(bufferLength/2)) * 255;
+			if (i < bufferLength/3){
+				triangle[i] = i/(bufferLength/3) * 2 - 1;
+			} else if (i < bufferLength * 2/3){
+				triangle[i] = (1 - (i - bufferLength/3)/(bufferLength/3)) * 2 - 1;
 			} else {
-				triangle[i] = (i - bufferLength * 0.75)/(bufferLength/4) * 127;
+				triangle[i] = (i - bufferLength * 2/3)/(bufferLength/3) * 2 - 1;
 			}
 		}
 
 		for (i = 0; i < bufferLength; i++){
 			var margin = bufferLength/16;
 			if (i < margin){
-				square[i] = 0;
+				square[i] = -1;
 			} else if (i < bufferLength/2){
-				square[i] = 255;
+				square[i] = 1;
 			} else if (i < (bufferLength - margin)){
-				square[i] = 0;
+				square[i] = -1;
 			} else {
-				square[i] = 255;
+				square[i] = 1;
 			}
 		}
 

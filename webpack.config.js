@@ -1,33 +1,30 @@
 var webpack = require("webpack");
 
 module.exports = {
-	"context": __dirname,
 	entry: {
-		"Logo": "src/Logo",
-		"Waveform": "src/Waveform",
+		"Logo": "./src/Logo",
+		"Waveform": "./src/Waveform",
 	},
 	output: {
 		filename: "./build/[name].js",
 		library : "[name]",
 		libraryTarget : "umd"
 	},
-	externals: { 
+	externals: {
 		Tone : "Tone",
 	},
 	resolve: {
-		root: __dirname,
-		modulesDirectories : ["src"],
+		modules : ["./src"],
 	},
-	plugins: [new webpack.optimize.UglifyJsPlugin({minimize: true})],
 	module: {
 		loaders: [
 			{
 				test: /\.scss$/,
-				loader: "style!css!autoprefixer!sass"
+				loader: "style-loader!css-loader!autoprefixer-loader!sass-loader"
 			},
 			{
 				test: /\.svg$/,
-				loader: "url"
+				loader: "url-loader"
 			}
 		]
 	},

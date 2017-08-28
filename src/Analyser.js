@@ -14,7 +14,7 @@ define(["Waveforms"], function (Waveforms) {
 		/**
 		 *  the value below which it is considered silent
 		 */
-		this._silentThresh = 0.01;
+		this._silentThresh = 0.001;
 
 		/**
 		 *  The current RMS of the incoming signal
@@ -46,8 +46,7 @@ define(["Waveforms"], function (Waveforms) {
 			 */
 			this._analyser = new Tone.Analyser({
 				"size" : bufferLen,
-				"type" : "waveform",
-				"returnType" : "byte"
+				"type" : "waveform"
 			});
 
 			/**
@@ -110,7 +109,7 @@ define(["Waveforms"], function (Waveforms) {
 
 		for (var i = 0, len = buffer.length; i < len; i++){
 			var x = this._scale(i, 0, len - 1, 0, width);
-			var y = this._scale(buffer[i], 0, 255, height - margin, margin);
+			var y = this._scale(buffer[i], -1, 1, height - margin, margin);
 			if (i === 0){
 				firstValue = y;
 				context.moveTo(x, y);
@@ -136,7 +135,7 @@ define(["Waveforms"], function (Waveforms) {
 		//if the average is close to 128
 		var total = 0;
 		for (var i = 0; i < analysis.length; i++){
-			total += Math.pow((analysis[i] - 128) / 128, 2);
+			total += Math.pow(analysis[i], 2);
 		}
 		var rms = Math.sqrt(total / analysis.length);
 		this._rms = Math.max(rms, this._rms * 0.9);

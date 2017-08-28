@@ -137,7 +137,7 @@ define(["Logo.scss", "Analyser", "T.svg"], function(LogoStyle, Analyser, svgT){
 
 		for (var i = 0, len = buffer.length; i < len; i++){
 			var x = this._scale(i, 0, len - 1, 0, width);
-			var y = this._scale(buffer[i], 0, 255, height - margin, margin);
+			var y = this._scale(buffer[i], -1, 1, height - margin, margin);
 			if (i === 0){
 				firstValue = y;
 				context.moveTo(x, y);
