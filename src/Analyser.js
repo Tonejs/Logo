@@ -42,12 +42,9 @@ define(["Waveforms"], function (Waveforms) {
 		if (hasTone()){
 			/**
 			 *  The waveform analysis of the incoming signal
-			 *  @type  {Tone.Analyser}
+			 *  @type  {Tone.Waveform}
 			 */
-			this._analyser = new Tone.Analyser({
-				"size" : bufferLen,
-				"type" : "waveform"
-			});
+			this._analyser = new Tone.Waveform(bufferLen);
 
 			/**
 			 *  A signal to make the analyser rest
@@ -82,7 +79,7 @@ define(["Waveforms"], function (Waveforms) {
 	Analyser.prototype._loop = function(){
 		requestAnimationFrame(this._boundLoop);
 		//if it's silent, draw a canned waveform when the mouse is over
-		var analysis = this._analyser.analyse();
+		var analysis = this._analyser.getValue();
 		if (this._isSilent(analysis)){
 			this._drawBuffer(waveform, true);
 		} else { //if it's not silent, draw the waveform
