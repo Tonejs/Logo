@@ -12,7 +12,7 @@
     "autoprefixer-loader": "*",
     "css-loader": "*",
     "file-loader": "*",
-    "jquery": "^2.1.4",
+    "jquery": "^3.5.0",
     "node-sass": "^4.1.1",
     "sass-loader": "*",
     "style-loader": "*",
